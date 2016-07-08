@@ -1,0 +1,105 @@
+****************************************************
+
+Compiladores. Jean Pierre Pacheco Avila 307137256
+
+****************************************************
+Proyecto 2.2 . Analisis dependiente del contexto 
+
+Para esta parte implenté maneras de checar el tipo
+de algunas expresiones.
+Por ejemplo si tenemos una suma: 8 + "hola"
+El tipo asociado a la expresión será 'error'
+y la ejecución terminará.
+De igual manera, si alguno de los sumandos es
+de tipo 'float' entonces la expresión será de 
+tipo 'float'.
+
+Tambien cada variable declarada tiene asociado 
+un tipo, por lo que si en algun momento se
+le asigna un valor con un tipo distinto, habra
+un error y la ejecución terminará.
+
+
+***************************************************
+Proyecto 3. Generación de código en C.
+
+Hice una modificacion a la gramatica de tal forma
+que los ciclos 'for' solo son validos si tienen
+la siguiente sintaxis:
+        for x in "cadena":
+                print x
+o:
+        z = "cadena"
+        for i in  z:
+                print i
+
+Es decir, este bloque solo es valido para imprimir
+los caracteres de una cadena uno por uno.
+Sé que no es util pero se me hizo un poco dificil
+generar codigo cuando el bloque tenia esta forma:
+
+        for i in "cadena" :
+                print i
+                print "h"
+
+NO hago chequeo de tipos para la guardia de 
+bloques if ni while, ya que en C, todo lo que
+sea distinto de cero es true.
+
+No pude generar codigo para imprimir cosas asi:
+        x = 8
+        print x + 2
+Aunque si x no fue declarada y la usamos en la
+expresion print x + 2, si es cachado el error.
+
+Con respecto a print, solo se genera codigo cuando
+se usa asi:
+        print x
+        print 2+5+8*8
+        
+El codigo generado tiene el siguiente encabezado
+siempre:
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+
+Las cadenas se representan con char*
+Los enteros y flotantes con su tipo respectivo.
+
+El codigo para print hace uso de printf.
+
+
+Los bloques if y while son generados
+casi de forma inmediata ya que son muy parecidos
+en C y en python. 
+Las Expresiones  de comparacion validas son:
+< , <= , >= , > , !=, <>
+y pueden usarse dentro de las guardias de bloques
+if y while.
+
+
+
+***************************************************
+Ejecucion:
+
+El archivo prueba.py es el archivo donde se 
+escribira el programa fuente escrito en 
+lenguaje python.
+En este momento contiene un programa prueba que
+funciona perfectamente aunque hay entradas para las que
+el codigo generado no va a compilar =(.
+
+Para ejecutar el analizador: make all
+Para limpiar: make clean
+
+
+
+Cuando se ejecute 'make all', y si no hay errores en
+el archivo de entrada de python 'prueba.py'
+se generará un archivo en C, 'archivo.c'. <------------IMPORTANTE
+
+
+Para compilarlo : gcc archivo.c -o archivo
+
+
+************************************************
